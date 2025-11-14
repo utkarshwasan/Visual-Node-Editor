@@ -20,7 +20,7 @@ A sleek, full-stack visual programming interface for crafting and validating com
 ## Features
 
 - **🎨 Intuitive Drag-and-Drop Canvas**: Visually design complex workflows by placing and connecting nodes effortlessly.
-- **📚 Rich Node Library**: A versatile set of nodes to tackle various tasks [cite: `app/page.tsx`]:
+- **📚 Rich Node Library**: A versatile set of nodes to tackle various tasks:
   - **🔽 Input/Output**: Set entry and exit points for your data flow.
   - **📝 Text**: Manipulate strings with dynamic `{{variable}}` support.
   - **🤖 LLM**: Seamlessly integrate Large Language Model prompts.
@@ -29,10 +29,10 @@ A sleek, full-stack visual programming interface for crafting and validating com
   - **🔄 Loop**: Iterate over data or repeat actions.
   - **🌐 API**: Fetch or send data via external HTTP requests.
   - **🔗 Merge**: Combine multiple data streams into one.
-- **🔗 Dynamic Variable Handles**: Text and LLM nodes auto-detect `{{variable}}` syntax, generating input handles for smooth pipeline creation [cite: `components/nodes/TextNode.tsx`, `components/nodes/LLMNode.tsx`].
-- **🛡 Backend Pipeline Validation**: Before running, the graph is validated using Kahn's algorithm to ensure a cycle-free Directed Acyclic Graph (DAG), preventing infinite loops [cite: `backend/main.py`, `app/api/validate-pipeline/route.ts`].
-- **📱 Modern & Responsive UI**: Built with **Tailwind CSS** and **shadcn/ui**, offering a clean, accessible, and themeable interface for all devices [cite: `tailwind.config.ts`].
-- **🖱 Interactive Controls**: Zoom, pan, and navigate large workflows with a handy minimap [cite: `app/page.tsx`].
+- **🔗 Dynamic Variable Handles**: Text and LLM nodes auto-detect `{{variable}}` syntax, generating input handles for smooth pipeline creation.
+- **🛡 Backend Pipeline Validation**: Before running, the graph is validated using Kahn's algorithm to ensure a cycle-free Directed Acyclic Graph (DAG), preventing infinite loops.
+- **📱 Modern & Responsive UI**: Built with **Tailwind CSS** and **shadcn/ui**, offering a clean, accessible, and themeable interface for all devices.
+- **🖱 Interactive Controls**: Zoom, pan, and navigate large workflows with a handy minimap.
 
 ## Tech Stack
 
@@ -49,7 +49,6 @@ A sleek, full-stack visual programming interface for crafting and validating com
 ```bash
 visual-node-editor/
 ├── app/                  # Next.js App Router: core frontend logic
-│   ├── api/              # API routes for pipeline validation
 │   ├── page.tsx          # Main canvas page
 │   └── layout.tsx        # Root layout for the app
 ├── backend/              # FastAPI Python backend
@@ -131,13 +130,13 @@ Backend API is live at `http://localhost:8000`.
 
 The heart of the editor lies in its node-based system, powered by **React Flow**.
 
-- **BaseNode.tsx**: A reusable component wrapping all custom nodes, providing a consistent structure with titles, delete buttons, and handle logic [cite: `components/nodes/BaseNode.tsx`].
+- **BaseNode.tsx**: A reusable component wrapping all custom nodes, providing a consistent structure with titles, delete buttons, and handle logic.
 - **Custom Nodes**: Each node (e.g., `TextNode.tsx`, `ApiNode.tsx`) in `components/nodes/` manages its own look and logic for maximum flexibility.
 
 ### Dynamic Variables
 
-Create dynamic pipelines with ease! Nodes like `TextNode` and `LLMNode` scan for `{{variableName}}` syntax and dynamically generate input handles for each unique variable, letting you pipe data seamlessly across your workflow [cite: `components/nodes/TextNode.tsx`].
+Create dynamic pipelines with ease! Nodes like `TextNode` and `LLMNode` scan for `{{variableName}}` syntax and dynamically generate input handles for each unique variable, letting you pipe data seamlessly across your workflow.
 
 ### Pipeline Validation
 
-To keep workflows logical, the frontend sends nodes and edges to a **FastAPI** endpoint. The backend uses Kahn's algorithm to perform topological sorting, detecting cycles and ensuring your pipeline is valid and loop-free [cite: `backend/main.py`].
+To keep workflows logical, the frontend sends nodes and edges to a **FastAPI** endpoint. The backend uses Kahn's algorithm to perform topological sorting, detecting cycles and ensuring your pipeline is valid and loop-free.
