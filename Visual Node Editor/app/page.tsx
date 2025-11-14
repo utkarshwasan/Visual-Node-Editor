@@ -101,7 +101,7 @@ export default function VisualNodeEditor() {
 
   const validatePipeline = async () => {
     try {
-      const response = await fetch("/api/validate-pipeline", {
+      const response = await fetch("http://127.0.0.1:8000/pipelines/parse", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nodes, edges }),
@@ -111,14 +111,14 @@ export default function VisualNodeEditor() {
       const alertMessage = `🔍 Pipeline Analysis Results:
 
 📊 Statistics:
-• Number of Nodes: ${result.node_count}
-• Number of Edges: ${result.edge_count}
-• Is Valid DAG: ${result.is_valid ? "Yes ✅" : "No ❌"}
+• Number of Nodes: ${result.num_nodes}
+• Number of Edges: ${result.num_edges}
+• Is DAG: ${result.is_dag ? "Yes ✅" : "No ❌"}
 
-${result.message ? `\n💡 Details: ${result.message}` : ""}`
+${result.is_dag ? "\n💡 Details: Valid DAG structure" : "\n💡 Details: Contains cycles or invalid connections"}`
 
       alert(alertMessage)
-      setPipelineStatus(result.is_valid ? "Valid DAG ✓" : "Invalid Pipeline ✗")
+      setPipelineStatus(result.is_dag ? "Valid DAG ✓" : "Invalid Pipeline ✗")
     } catch (error) {
       alert("❌ Error validating pipeline. Please check your connection and try again.")
       setPipelineStatus("Validation Error")
@@ -147,7 +147,7 @@ ${result.message ? `\n💡 Details: ${result.message}` : ""}`
         ...(type === "merge" && { mergeType: "concat" }),
       },
     }
-    setNodes((nds) => [...nds, newNode])
+    setNodes((nds) => (nds.some((n) => n.id === newNode.id) ? nds : [...nds, newNode as any]))
   }
 
   return (
